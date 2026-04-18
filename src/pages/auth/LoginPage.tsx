@@ -1,4 +1,16 @@
+/**
+ * LoginPage — 로그인 화면
+ *
+ * Step A (완료): 제어 컴포넌트 + 제출 핸들러
+ * Step B (완료): 클라이언트 사이드 유효성 검증
+ * Step C (완료): Axios로 서버에 로그인 요청 + async 처리
+ * Step D (예정): 토큰 저장 + 인증 상태 관리 (Zustand)
+ */
+
 import { useState, type SubmitEventHandler } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { login } from '../../api/auth';
 
 const EMAIL_REGEX = /^[^\s@]+@koreatech\.ac\.kr$/;
 const MIN_PASSWORD_LENGTH = 8;
@@ -10,7 +22,7 @@ type LoginFormErrors = {
 
 function validate(email: string, password: string): LoginFormErrors {
   const next: LoginFormErrors = {};
-  
+
   if (email === '') {
     next.email = '이메일을 입력해주세요.';
   } else if (!EMAIL_REGEX.test(email)) {
@@ -30,8 +42,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<LoginFormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     const nextErrors = validate(email, password);
@@ -39,12 +55,29 @@ export default function LoginPage() {
     if (Object.keys(nextErrors).length > 0) {
       return;
     }
-    console.log({ email, password });
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const response = await login({ email, password });
+      console.log('로그인 성공:', response);
+      navigate('/');
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.status === 401) {
+        setSubmitError('이메일 또는 비밀번호가 일치하지 않습니다.');
+      } else {
+        setSubmitError('로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div>
       <h1>로그인</h1>
+
+      {submitError && <p>{submitError}</p>}
 
       <form onSubmit={handleSubmit}>
         <label>
@@ -53,6 +86,7 @@ export default function LoginPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={isSubmitting}
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
@@ -63,11 +97,14 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={isSubmitting}
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
 
-        <button type="submit">로그인</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? '로그인 중...' : '로그인'}
+        </button>
       </form>
     </div>
   );
