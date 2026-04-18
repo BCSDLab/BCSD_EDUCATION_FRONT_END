@@ -1,16 +1,8 @@
-/**
- * LoginPage — 로그인 화면
- *
- * Step A (완료): 제어 컴포넌트 + 제출 핸들러
- * Step B (완료): 클라이언트 사이드 유효성 검증
- * Step C (완료): Axios로 서버에 로그인 요청 + async 처리
- * Step D (예정): 토큰 저장 + 인증 상태 관리 (Zustand)
- */
-
 import { useState, type SubmitEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { login } from '../../api/auth';
+import { useAuthStore } from '../../store/authStore';
 
 const EMAIL_REGEX = /^[^\s@]+@koreatech\.ac\.kr$/;
 const MIN_PASSWORD_LENGTH = 8;
@@ -46,6 +38,7 @@ export default function LoginPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const setTokens = useAuthStore((state) => state.setTokens);
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -60,7 +53,7 @@ export default function LoginPage() {
     setSubmitError(null);
     try {
       const response = await login({ email, password });
-      console.log('로그인 성공:', response);
+      setTokens(response.accessToken, response.refreshToken);
       navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 401) {
