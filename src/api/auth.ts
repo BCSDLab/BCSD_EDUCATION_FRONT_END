@@ -15,6 +15,7 @@
  *     응답:  { accessToken, refreshToken }  (PRD 9.1 JWT 기반 가정)
  */
 
+import axios from 'axios';
 import client from './client';
 
 // ── 요청/응답 타입 ─────────────────────────────────────────────
@@ -60,5 +61,17 @@ export type LoginResponse = {
 //     - async 함수는 Promise를 반환 — Spring의 CompletableFuture<T>와 개념 동일
 export async function login(request: LoginRequest): Promise<LoginResponse> {
   const response = await client.post<LoginResponse>('/api/auth/login', request);
+  return response.data;
+}
+
+export type RefreshResponse = {
+  accessToken: string;
+};
+
+export async function refresh(refreshToken: string): Promise<RefreshResponse> {
+  const response = await axios.post<RefreshResponse>(
+    'http://localhost:8080/api/auth/refresh',
+    { refreshToken },
+  );
   return response.data;
 }
