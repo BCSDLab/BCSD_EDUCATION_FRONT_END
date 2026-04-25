@@ -1,0 +1,269 @@
+.page {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  background: var(--color-gray-0);
+  min-height: 100vh;
+}
+
+/* ── LEFT brand panel ──────────────────────────────────────── */
+.brandPanel {
+  position: relative;
+  background: var(--color-gray-900);
+  color: #ffffff;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cornerMark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 220px;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.cornerSquare {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 10px;
+  height: 10px;
+  background: var(--color-purple-500);
+}
+
+.brandHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandDivider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.brandVersion {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-mono);
+}
+
+.brandBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brandKicker {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  font-family: var(--font-mono);
+  color: var(--color-purple-300);
+}
+
+.brandHeadline {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  max-width: 420px;
+  margin: 0;
+}
+
+.brandHeadlineAccent {
+  color: var(--color-purple-400);
+}
+
+.brandLead {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 420px;
+}
+
+.brandFooter {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-mono);
+}
+
+.brandFooterDot {
+  opacity: 0.3;
+}
+
+/* ── RIGHT form panel ──────────────────────────────────────── */
+.formPanel {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  margin: 0;
+}
+
+.topNav {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 13px;
+  color: var(--color-gray-500);
+}
+
+.topLink {
+  color: var(--color-gray-900);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.topLink:hover {
+  color: var(--color-purple-600);
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.headline {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+}
+
+.lead {
+  font-size: 14px;
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+.formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.subLink {
+  cursor: pointer;
+  color: var(--color-purple-600);
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.subLink:hover {
+  color: var(--color-purple-700);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  margin-top: 2px;
+  user-select: none;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--color-gray-300);
+  background: var(--color-gray-0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.checkboxOn {
+  border-color: var(--color-purple-500);
+  background: var(--color-purple-500);
+}
+
+.errorBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--color-error-text);
+  line-height: 1.5;
+}
+
+.bottomMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--color-gray-400);
+  letter-spacing: -0.1px;
+}
+
+.path {
+  font-family: var(--font-mono);
+}
+
+.help {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.help:hover {
+  color: var(--color-gray-700);
+}
+
+@media (max-width: 768px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+  .brandPanel {
+    display: none;
+  }
+}
